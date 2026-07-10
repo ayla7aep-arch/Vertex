@@ -10,46 +10,27 @@ export default async function handler(
 
   const { title, category, description, downloadUrl } = req.body;
 
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  const botUrl = process.env.BOT_URL;
 
-  if (!webhookUrl) {
-    return res.status(500).json({ error: 'Webhook missing' });
+  if (!botUrl) {
+    return res.status(500).json({ error: 'Bot URL missing' });
   }
 
-  const response = await fetch(webhookUrl, {
+  const response = await fetch(`${botUrl}/submit`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      embeds: [
-        {
-          title: '📥 New Resource Submission',
-          fields: [
-            {
-              name: 'Title',
-              value: title || 'No title',
-            },
-            {
-              name: 'Category',
-              value: category || 'No category',
-            },
-            {
-              name: 'Description',
-              value: description || 'No description',
-            },
-            {
-              name: 'Download Link',
-              value: downloadUrl || 'No link',
-            },
-          ],
-        },
-      ],
+      title,
+      category,
+      description,
+      downloadUrl,
     }),
   });
 
   if (!response.ok) {
-    return res.status(500).json({ error: 'Discord failed' });
+    return res.status(500).json({ error: 'Bot failed' });
   }
 
   return res.status(200).json({ success: true });
