@@ -50,3 +50,15 @@ async function sendSubmission(data) {
 }
 
 client.login(process.env.DISCORD_TOKEN);
+
+const express = require("express");
+
+const app = express();
+app.use(express.json());
+
+app.post("/submit", async (req, res) => {
+  await sendSubmission(req.body);
+  res.json({ success: true });
+});
+
+app.listen(process.env.PORT || 3000);

@@ -15,6 +15,7 @@
     "@vercel/node": "^5.8.23",
     "discord.js": "^14.26.4",
     "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
